@@ -1,454 +1,149 @@
-html code:
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fronted1_Module_Test</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" h2ref="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Add your CSS file here -->
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: black;
+            color: #fff;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Form Styles */
+        #studentForm {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 100%;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            border: none;
+        }
+
+        #studentForm label,
+        #studentForm input,
+        #studentForm button {
+            margin-bottom: 10px;
+            margin: 10px;
+        }
+
+       
+        #studentForm input {
+            width: 100%;
+            margin-right: 5px;
+            margin-left: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            background-color: black;
+            color: white;
+        }
+
+        #submitBtn {
+            grid-column: 1 / -1;
+            /* Span the full width of the grid */
+            background-color: #ecf3ec;
+            color: #150202;
+            cursor: pointer;
+            width: 200px;
+        }
+
+        /* Table Styles */
+        #studentTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        #studentTable th,
+        #studentTable td {
+            border: 1px solid #969191;
+            padding: 8px;
+            text-align: center;
+        }
+
+        #studentTable th {
+            background-color: #060000;
+        }
+
+        /* Search Box Styles */
+        #searchInput {
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            background-color: black;
+        }
+
+        /* Edit and Delete Icons Styles */
+        .edit-icon,
+        .delete-icon {
+            cursor: pointer;
+        }
+
+        /* Add some hover effect for the icons */
+        .edit-icon:hover,
+        .delete-icon:hover {
+            color: #4CAF50;
+        }
+    </style>
 </head>
 
+<body>
+    <h1>Student Management CRUD</h1>
 
-<style>
-    css code: @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800&display=swap');
+    <!-- Form to Add/Edit Students -->
+    <form id="studentForm">
 
-    * {
-        font-family: 'Inter', sans-serif;
-    }
+        
+        <input type="text" id="name" required placeholder="Name">
+       
+        <input type="email" id="email" required placeholder="Email">
+        
+        <input type="number" id="gpa" required placeholder="GPA">
+       
+        <input type="number" id="age" required placeholder="Age">
+        
+        <input type="text" id="degree" required placeholder="Degree">
+        <button type="submit" id="submitBtn">Add Student</button>
+    </form>
 
-    .color {
-        background-color: #333333;
-    }
+    <!-- Search Box -->
+    <input type="text" id="searchInput" placeholder="Search by name, email, or degree">
 
-    .nav-container {
-        display: flex;
-        justify-content: space-between;
-        margin: 20px;
-        padding: 2px;
-        border: 1px solid #b1a592;
-        border-radius: 30px;
-    }
+    <!-- Table to Display Students -->
+    <table id="studentTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Student Name</th>
+                <th>Email</th>
+                <th>GPA</th>
+                <th>Age</th>
+                <th>Degree</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Student rows will be dynamically added here using JavaScript -->
+        </tbody>
+    </table>
 
-    .nav-container button {
-        height: 50px;
-        border: 1px solid #b1a592;
-        border-radius: 25px;
-        color: #b1a592;
-        padding: 0 50px;
-        background-color: transparent;
-    }
-
-    .first-button {
-        background-color: #323025 !important;
-        border: none !important;
-        padding: 0 100px !important;
-    }
-
-    .hover-btn:hover {
-        background-color: #b1a592;
-        color: #333333;
-    }
-
-    .card-container {
-        padding: 10px 20px;
-    }
-
-    .item-1 {
-        background-color: #dfd6c5;
-        border-radius: 30px;
-    }
-
-    .item-1>p,
-    .item-2-upper>div>h4,
-    .item-4>div>h4 {
-        color: #323025;
-        border: 1px solid #323025;
-        border-radius: 50px;
-        display: inline-block;
-        margin: 35px 20px;
-        padding: 5px 30px;
-    }
-
-    .item-1 img {
-        height: 700px;
-    }
-
-    .item-1>h2,
-    .item-2-upper>div>h2 {
-        font-weight: bold;
-        color: #333333;
-        padding-left: 20px;
-        padding-bottom: 20px;
-    }
-
-    .item-1>h2>span,
-    .item-2-upper>div>h2>span {
-        text-decoration: underline;
-    }
-
-    .image {
-        margin: 0 20px;
-        margin-bottom: 20px;
-        display: inline-block;
-        border-radius: 20px;
-    }
-
-    .item-1,
-    .item-2,
-    .item-3,
-    .item-4 {
-        position: relative;
-    }
-
-    .last-item {
-        display: flex;
-        justify-content: space-between;
-        padding: 20px;
-        border-top: 1px solid #333333;
-        align-items: center;
-    }
-
-    .image>div>img {
-        transition: all 0.4s ease-in-out;
-        width: 100%;
-    }
-
-    .image>div {
-        overflow: hidden;
-        border-radius: 20px;
-    }
-
-    .item-1:hover>.image>div>img,
-    .item-2:hover>.item-2-upper>.image>div>img,
-    .item-3:hover>.image>div>img {
-        transform: scale(1.1);
-    }
-
-    .item-2-upper {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-    }
-
-    .item-2 {
-        background-color: #8e886d;
-        border-radius: 30px;
-    }
-
-    .item-2-upper>div>p {
-        color: #333333;
-        padding: 20px;
-        font-size: 20px;
-    }
-
-    .last-item>p {
-        font-size: 24px;
-    }
-
-    .item-3 {
-        background: #916e58;
-        border-radius: 30px;
-    }
-
-    .item-3>h2 {
-        font-size: 36px;
-        color: #333333;
-        padding: 20px;
-        font-weight: bold;
-    }
-
-    .item-3>p {
-        font-weight: 400;
-        font-size: 20px;
-        color: #333333;
-        padding: 20px;
-    }
-
-    .item-4 {
-        background-color: #b1a48e;
-        border-radius: 30px;
-    }
-
-    .circle-image {
-        float: right;
-        height: 50px;
-        width: 150px;
-        padding: 25px;
-    }
-
-    .circle-image>div {
-        overflow: hidden;
-        border-radius: 80px;
-    }
-
-    .circle-image>div>img {
-        transition: all 0.4s ease-in-out;
-        width: 100%;
-    }
-
-    .item-4:hover>div>.circle-image>div>img {
-        transform: scale(1.1);
-    }
-
-    .item-4>div {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .item-4>h2 {
-        font-weight: 700;
-        font-size: 36px;
-        padding: 30px;
-    }
-
-    .item-4>h2>span {
-        text-decoration: underline;
-    }
-
-    .item-4>p {
-        font-size: 20px;
-        padding: 120px 60px 120px 20px;
-    }
-
-    .line>p {
-        font-size: 20px;
-    }
-
-    .line {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-top: 4px solid black;
-        border-bottom: 4px solid black;
-        margin: 20px;
-    }
-
-    .card-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 15px;
-    }
-
-    .item-1 {
-        grid-row: 1/3;
-    }
-
-    .item-2 {
-        grid-column: 2/4;
-    }
-
-    .item-1>h2 {
-        padding-top: 50px;
-        padding-bottom: 50px;
-        font-size: 30px;
-    }
-
-    @media (min-width: 840px) {
-        .responsive {
-            display: none;
-        }
-    }
-
-    @media (max-width: 840px) {
-        .card-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .item-1,
-        .item-2 {
-            grid-column: 1/3;
-        }
-
-        .item-1>h2 {
-            padding-top: 0;
-            padding-bottom: 20px;
-        }
-
-        .left-half>.hover-btn,
-        .right-half {
-            display: none;
-        }
-
-        .left-half {
-            flex-grow: 1;
-            display: flex;
-        }
-
-        .first-button {
-            flex-grow: 1;
-        }
-    }
-
-    @media (max-width: 540px) {
-        .card-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
-
-        .item-1,
-        .item-2 {
-            grid-column: 1/2;
-        }
-
-        .item-4>h2 {
-            margin-top: 40px;
-        }
-
-        .responsive {
-            display: flex;
-        }
-
-        .menu {
-            padding: 0 10px !important;
-        }
-
-        .item-2-upper {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-direction: column;
-        }
-    }
-
-    .item-3>h2 {
-        display: inline-block;
-        position: relative;
-    }
-
-    .item-3>h2::before {
-        content: "";
-        position: absolute;
-        left: 20px;
-        bottom: 0;
-        width: 0%;
-        height: 5px;
-        background-color: #333333;
-        transition: width 1s ease-out;
-    }
-
-    .item-3:hover>h2::before {
-        width: 80%;
-    }
-    button{ 
-        font-weight: bold;
-    }
-</style>
-
-<body class="color">
-    <header>
-        <nav class="nav-container">
-            <div class="left-half">
-                <a href="https://www.instagram.com/ahmadraza93845/"> <button class="first-button"> Museo Sans</button></a>
-                <a href="https://www.instagram.com/ahmadraza93845/"><button class="hover-btn">Collections</button></a>
-                <a href="https://www.instagram.com/ahmadraza93845/"> <button class="hover-btn">Our mission</button></a>
-                <a href="https://www.instagram.com/ahmadraza93845/"> <button class="hover-btn">Events</button></a>
-            </div>
-            <div class="right-half">
-                <button class="hover-btn">Contact now</button>
-            </div>
-            <div class="responsive">
-                <button class="hover-btn menu">Menu</button>
-            </div>
-        </nav>
-    </header>
-    <main>
-        <div class="card-container">
-            <div class="item-1">
-                <p>CONGREVE STREET</p>
-                <h2>Birmingham <span>Museums.</span></h2>
-                <div class="image">
-                    <div>
-                        <img src="img1.png" alt="Birmingham-Museums-Image" />
-                    </div>
-                </div>
-                <div class="last-item">
-                    <p>GET STARTED</p>
-                    <span class="material-symbols-outlined"> arrow_forward </span>
-                </div>
-            </div>
-            <div class="item-2">
-                <div class="item-2-upper">
-                    <div>
-                        <h4>EUROPEANA</h4>
-                        <h2 style="font-size: 28px; font-weight: bold;">A Woman Slicing <span>Bread.</span></h2>
-                        <p style="font-size: 15px;">
-                            DATE: 1800. INSTITUTION: RIJKSMUSEUM. PROVIDER: RIJKSMUSEUM.
-                            PROVIDING COUNTRY: NETHERLANDS. PUBLIC DOMAIN. PHOTO BY
-                            EUROPEANA.
-                        </p>
-                    </div>
-                    <div class="image" style="padding: 20px">
-                        <div>
-                            <img style="height: 300px; width: 400px;" src="img2.png" alt="EUROPEANA-Image" />
-                        </div>
-                    </div>
-                </div>
-                <div class="last-item">
-                    <p>GET STARTED</p>
-                    <span class="material-symbols-outlined"> arrow_forward </span>
-                </div>
-            </div>
-            <div class="item-3">
-                <div>
-
-                    <div>
-                        <div class="image" style="padding: 10px;">
-                            <img style="height: 300px; width: 400px; border-radius: 15px;" src="img3.png" alt="EUROPEANA-Image" />
-                        </div>
-                    </div>
-                </div>
-                <h2>Portrait </h2>
-                <p style="font-size: 15px;">
-                    PORTRAIT OF MARITGE CLAESDR VOOGHT. DATE: 1639. INSTITUTION: RIJKSMUSEUM. PROVIDER: RIJKSMUSEUM.
-                    PROVIDING COUNTRY: NETHERLANDS. PUBLIC DOMAIN
-                </p>
-
-                <div class="last-item">
-                    <p>GET STARTED</p>
-                    <span class="material-symbols-outlined"> arrow_forward </span>
-                </div>
-            </div>
-            <div style="background-color: #dfd6c5;" class="item-3">
-                <div>
-                    <h4 style="margin: 15px; border: 1px black solid; width: 180px; border-radius: 30px; padding: 10px;">EUROPEANA</h4>
-                    <div class="circle-image">
-                        <div>
-                            <img style="float:right;" src="img4.png" alt="EUROPEANA-Image" />
-                        </div>
-                    </div>
-                </div>
-                <h2 style="margin-top: 100px;">Vintage <span>Painting.</span></h2>
-                <p style="font-size: 15px;">
-                    PORTRAIT OF A MAN. DATE: 1648. INSTITUTION: RIJKSMUSEUM. PROVIDER:
-                    RIJKSMUSEUM. PROVIDING COUNTRY: NETHERLANDS. PUBLIC DOMAIN
-                </p>
-                <section class="line">
-                    <p>PUBLIC DOMAIN</p>
-                    <p style="font-weight: bold">NETHERLANDS</p>
-                </section>
-                <div class="last-item">
-                    <p>GET STARTED</p>
-                    <span class="material-symbols-outlined"> arrow_forward </span>
-                </div>
-            </div>
-        </div>
-    </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    <script src="test.js"></script> <!-- Add your JavaScript file here -->
 </body>
 
 </html>
