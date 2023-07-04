@@ -154,11 +154,11 @@ function displayFilteredStudents(filteredStudents) {
     });
 }
 
-// Event listener for form submission
+
 document.getElementById('studentForm').onsubmit = addStudent;
 
-// Event listener for search input
+
 document.getElementById('searchInput').addEventListener('input', searchStudents);
 
-// Display students initially
+
 displayStudents();
